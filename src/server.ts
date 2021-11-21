@@ -4,10 +4,7 @@ import Express from "express";
 //import initConnection from "./lib/db";
 import router from "./router";
 
-//import { CustomError } from "./lib/error";
-
-// DB
-//initConnection();
+import { CustomError } from "./lib/CustomError";
 
 // Routing
 const app = Express();
@@ -16,7 +13,6 @@ app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 
 app.use("/", router);
-/*
 
 app.use((err, req, res, next) => {
     console.error(err);
@@ -28,6 +24,5 @@ app.use((err, req, res, next) => {
         });
     else res.status(500).send({ msg: "Something went wrong..." });
 });
-*/
 
 export default app;

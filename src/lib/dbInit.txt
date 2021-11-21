@@ -1,0 +1,1 @@
+create table member(me_id int auto_increment primary key, name varchar(20), phone varchar(20), date date default current_date);s
