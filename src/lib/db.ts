@@ -1,10 +1,11 @@
 import { createPool } from "mysql2/promise";
+import password from "./secret";
 
 const pool = createPool({
     host: "localhost",
     user: "root",
     database: "KuStore",
-    password: "whworjs",
+    password: password,
 });
 
 const db = async (queryStr: string) => {
