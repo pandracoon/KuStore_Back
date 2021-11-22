@@ -9,7 +9,7 @@ const getOrderList: RequestHandler = async (req, res, next) => {
             "or_id, me_id, it_id, me_name, it_name, amount, total_price, time";
         const joinStr = "orders natural join member natural join item";
         const queryStr = params
-            ? `select ${selectStr} from ${joinStr} where name = "${params}"`
+            ? `select ${selectStr} from ${joinStr} where me_name = "${params}"`
             : `select ${selectStr} from ${joinStr}`;
         console.log(queryStr);
         const orderList = await db(queryStr);
@@ -50,7 +50,7 @@ const addOrder: RequestHandler = async (req, res, next) => {
         const queryStr = `insert into orders (me_id, it_id, amount, total_price) values(${me_id}, ${it_id}, ${amount}, ${total_price})`;
         const result = await db(queryStr);
         await addPoint(me_id, total_price);
-        await sellItem(me_id, amount);
+        await sellItem(it_id, amount);
         const insertId = result[0].insertId;
         res.status(200).json(`Successfully inserted as ID: ${insertId}`);
     } catch (err) {
@@ -73,7 +73,7 @@ const updateOrder: RequestHandler = async (req, res, next) => {
         const queryStr = `update orders set me_id = ${me_id}, it_id = ${it_id}, amount = ${amount}, total_price = ${total_price} where or_id = "${or_id}"`;
         await db(queryStr);
         await addPoint(me_id, total_price);
-        await sellItem(me_id, amount);
+        await sellItem(it_id, amount);
 
         res.status(200).json(`Successfully updated ID: ${or_id}`);
     } catch (err) {
@@ -138,6 +138,9 @@ const sellItem = async (it_id, amount) => {
         const inventoryInfo = await db(
             `select * from inventory where it_id = ${it_id}`
         );
+        console.log("here");
+        console.log(it_id);
+        console.log(inventoryInfo);
         const prevStorage = inventoryInfo[0][0].storage;
         const curStorage = prevStorage - amount > 0 ? prevStorage - amount : 10;
         await db(
