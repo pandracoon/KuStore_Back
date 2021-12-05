@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-import db from "../lib/db";
 
 const msg = "Hello KuStore.<br>By Pandracoon. @ 2021";
 

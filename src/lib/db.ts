@@ -21,4 +21,4 @@ const db = async (queryStr: string) => {
     }
 };
 
-export default db;
+export { db, pool };
