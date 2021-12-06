@@ -4,6 +4,7 @@ import { pool } from "../../lib/db";
 
 const getInventoryList: RequestHandler = async (req, res, next) => {
     const conn = await pool.getConnection();
+    await conn.query("set transaction isolation level serializable");
     try {
         await conn.beginTransaction();
         const selectStr = "it_id, it_name, storage";

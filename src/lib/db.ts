@@ -3,7 +3,7 @@ import password from "./secret";
 
 const pool = createPool({
     host: "localhost",
-    user: "root",
+    user: "whworjs",
     database: "KuStore",
     password: password,
 });

@@ -4,6 +4,7 @@ import { pool } from "../../lib/db";
 
 const getMemberList: RequestHandler = async (req, res, next) => {
     const conn = await pool.getConnection();
+    await conn.query("set transaction isolation level serializable");
     try {
         await conn.beginTransaction();
         const params = req.query.name;
@@ -31,6 +32,7 @@ const getMemberList: RequestHandler = async (req, res, next) => {
 
 const getMember: RequestHandler = async (req, res, next) => {
     const conn = await pool.getConnection();
+    await conn.query("set transaction isolation level serializable");
     try {
         await conn.beginTransaction();
         const params = req.query.id;
@@ -56,6 +58,7 @@ const getMember: RequestHandler = async (req, res, next) => {
 
 const addMember: RequestHandler = async (req, res, next) => {
     const conn = await pool.getConnection();
+    await conn.query("set transaction isolation level serializable");
     try {
         await conn.beginTransaction();
         const name = req.body.me_name;
@@ -84,6 +87,7 @@ const addMember: RequestHandler = async (req, res, next) => {
 
 const updateMember: RequestHandler = async (req, res, next) => {
     const conn = await pool.getConnection();
+    await conn.query("set transaction isolation level serializable");
     try {
         await conn.beginTransaction();
         const id = req.body.id;
@@ -111,6 +115,7 @@ const updateMember: RequestHandler = async (req, res, next) => {
 
 const deleteMember: RequestHandler = async (req, res, next) => {
     const conn = await pool.getConnection();
+    await conn.query("set transaction isolation level serializable");
     try {
         await conn.beginTransaction();
         const id = req.body.id;
